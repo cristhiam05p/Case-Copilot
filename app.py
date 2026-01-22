@@ -184,6 +184,7 @@ def _offline_reply_template(
             f"{evidence_note}\n\n"
             f"{closing}"
         )
+    )
 
 
 def generate_reply(
