@@ -1,0 +1,7 @@
+case_id,subject,description,status,account
+C-1001,Login errors after SSO update,"Users report 'Invalid SAML response' after updating IdP metadata. Affected users cannot log in.",New,Acme GmbH
+C-1002,Billing portal timing out,"Customers see a timeout when opening invoices. Issue started after last release.",In Progress,Northwind Traders
+C-1003,API rate limit confusion,"Integration receives 429 errors and is unsure how to request higher limits.",New,Globex
+C-1004,Password reset emails delayed,"Reset emails arrive 30-40 minutes late for EU tenants.",New,Contoso
+C-1005,Data export missing columns,"CSV export no longer includes custom fields 'Region' and 'Tier'.",Investigating,Initech
+C-1006,Mobile app crash on launch,"iOS app crashes immediately after login screen. No recent device changes reported.",New,Stark Industries
