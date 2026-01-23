@@ -150,13 +150,22 @@ def _offline_reply_template(
     evidence: List[Dict[str, Any]],
     language: str,
 ) -> str:
+    signature_block = (
+        "--\n"
+        "Villeroy & Boch Group\n"
+        "Villeroy & Boch AG\n"
+        "Saaruferstraße 1-3\n"
+        "66693 Mettlach, Germany\n"
+        "Tel. +49 (0)6864 81 0\n"
+        "information@villeroy-boch.com"
+    )
     if language == "DE":
         greeting = "Hallo"
-        closing = "Viele Grüße\nIhr Support-Team"
+        closing = f"Mit freundlichen Grüßen\n\n{signature_block}"
         insuff = "Hinweis: Die verfügbaren Wissensartikel reichen für eine vollständige Antwort nicht aus."
     else:
         greeting = "Hello"
-        closing = "Best regards\nSupport Team"
+        closing = f"Best regards\n\n{signature_block}"
         insuff = "Note: The available knowledge articles are insufficient for a complete answer."
 
     evidence_note = ""
@@ -170,7 +179,7 @@ def _offline_reply_template(
 
     return (
         f"{greeting},\n\n"
-        f"vielen Dank für Ihre Anfrage zu '{case_row['subject']}'. "
+            f"wir danken Ihnen für Ihre Anfrage zu '{case_row['subject']}'. "
         f"Zusammenfassung: {summary}.\n\n"
         f"Nächste Schritte: {steps}\n"
         f"{evidence_note}\n\n"
@@ -178,7 +187,7 @@ def _offline_reply_template(
         if language == "DE"
         else (
             f"{greeting},\n\n"
-            f"thanks for reaching out about '{case_row['subject']}'. "
+            f"we appreciate you reaching out about '{case_row['subject']}'. "
             f"Summary: {summary}.\n\n"
             f"Next steps: {steps}\n"
             f"{evidence_note}\n\n"
@@ -200,9 +209,20 @@ def generate_reply(
             for idx, item in enumerate(evidence)
         )
         prompt = (
-            "You draft a customer reply for a Salesforce-like case. "
+            "You draft a customer reply for a Salesforce-like case on behalf of "
+            "Villeroy & Boch Group (Villeroy & Boch AG). Write in first-person plural (we). "
             "Only use the provided evidence. If evidence is insufficient, say so explicitly. "
-            f"Reply in {language}. Use a professional, concise tone.\n\n"
+            f"Reply in {language}. Use a premium, professional, clear, and courteous tone. "
+            "Do not mention being an AI model or any app context. Include this signature block "
+            "at the end of the email, separated by a line with "
+            "-- and formatted exactly as shown:\n"
+            "--\n"
+            "Villeroy & Boch Group\n"
+            "Villeroy & Boch AG\n"
+            "Saaruferstraße 1-3\n"
+            "66693 Mettlach, Germany\n"
+            "Tel. +49 (0)6864 81 0\n"
+            "information@villeroy-boch.com\n\n"
             f"Case subject: {case_row['subject']}\n"
             f"Case description: {case_row['description']}\n\n"
             f"Evidence:\n{evidence_text if evidence_text else 'No evidence provided.'}\n"
